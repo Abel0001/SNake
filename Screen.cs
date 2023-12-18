@@ -3,7 +3,7 @@ public class Screen{
 
     IDictionary<int, char> characters = new Dictionary<int, char>();
     List<int> DisplayList = new List<int>(); 
-
+    public List<int> LockedList = new List<int>();
     public List<string> TextDisplayBefore = new List<string>();
     public List<string> TextDisplayAfter = new List<string>();
 
@@ -77,8 +77,9 @@ public class Screen{
     public void ClearScreen(){
         for(int i = 0; i < xSize * ySize; i++)
         {
+            if(!(LockedList.Contains(i)))
             DisplayList[i] = 0;
+            else continue;
         }
-        RenderScreen();
     }
 }
