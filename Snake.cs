@@ -14,7 +14,7 @@ public class Snake{
     }
      static int[] followerTemp = new int[2];
 
-     static Thread snakeInputThread = new Thread(new ThreadStart(SnakeInput));
+    // static Thread snakeInputThread = new Thread(new ThreadStart(SnakeInput));
    // static Thread snakeMoveThread = new Thread(new ThreadStart(SnakeMove));
     static Thread snakeBodyThread = new Thread(new ThreadStart(UpdateBody));
 
@@ -47,6 +47,7 @@ public class Snake{
                     break;
                 case 's':
                     direction = (int)Directions.Down;
+
                     break;
                 case 'a':
                      direction = (int)Directions.Left;
@@ -54,6 +55,7 @@ public class Snake{
                     break;
                 case 'd':
               direction = (int)Directions.Right;
+
                     break;
                 case '1':
                 System.Environment.Exit(1);
