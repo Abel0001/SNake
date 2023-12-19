@@ -51,6 +51,13 @@ public class Screen{
         }
         return x + y*ySize;
     }
+    public int[] GetCorrespondingCoordinates(int index){
+        if(index > (xSize * ySize) - 1){
+            throw new IndexOutOfRangeException();
+        }
+
+        return new int[] {index / (ySize - 1), index / (xSize - 1)};
+    }
 
     public void RenderScreen()
     {
@@ -77,7 +84,7 @@ public class Screen{
     public void ClearScreen(){
         for(int i = 0; i < xSize * ySize; i++)
         {
-            if(!(LockedList.Contains(i)))
+            if(!LockedList.Contains(i))
             DisplayList[i] = 0;
             else continue;
         }

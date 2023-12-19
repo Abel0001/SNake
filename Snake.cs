@@ -1,6 +1,9 @@
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 public class Snake{
+
+    static bool isDead = false;
     static int snakeX = 0;
     static int snakeY = 0;
     public static List<int[]> snakeBody = new List<int[]>();
@@ -19,18 +22,33 @@ public class Snake{
    // static Thread snakeBodyThread = new Thread(new ThreadStart(UpdateBody));
 
 
+    static void Reset(){
+        points = 0;
+        direction = 0;
+        snakeBody = new List<int[]>();
+        snakeMoveCounter = 0;
+        snakeX = 0; snakeY = 0;
+        addBody = false;
+        foodLoc = new int[2];
+        followerTemp = new int[2];
+        Program.screen.TextDisplayAfter = new List<string>();
+        Program.screen.TextDisplayBefore = new List<string>();
+    }
+
     public static void SnakeInit(){
-        Program.screen.TextDisplayBefore[0] = "Irányítás 'W' 'A' 'S' 'D' gombbal";
+        Reset();
+        Program.screen.TextDisplayBefore.Add("Irányítás 'W' 'A' 'S' 'D' gombbal");
         Program.screen.TextDisplayBefore.Add("\nPontok:" + points+"\n");
-        SpawnFoodThing();
        // snakeMoveThread.Start();
         //snakeBodyThread.Start();
 
         snakeBody.Add(new int[] {5,5});
+        SpawnWithValidFoodLoc(0);
         UpdateBody();
                 SnakeInput();
 
     }
+    
     public static void SnakeInput(){
         while(true){
             char input = 'o';
@@ -68,6 +86,7 @@ public class Snake{
                 default:
                 break;
             }
+
         }
         
     }
@@ -126,10 +145,19 @@ public class Snake{
                 }
 
         }
-            }}
+            }
+            
+            
+            }
     
     static int points = 0;
     static int snakeMoveCounter = 0;
+
+
+    public static void SpawnWithValidFoodLoc(int iterator){
+        SpawnFoodThing();
+        if(foodLoc[0] == snakeBody[iterator][0] && foodLoc[1] == snakeBody[iterator][1]) SpawnWithValidFoodLoc(iterator);
+    }
     public static async Task UpdateBody(){
        while(true){
 
@@ -137,17 +165,29 @@ public class Snake{
         snakeBody[0] = new int[] {snakeX,snakeY};
             SnakeMove();
 
-        
-
-        Program.screen.ClearScreen();
-
-        Program.screen.ChangeCharacter(foodLoc[0],foodLoc[1],2);
+                Program.screen.ChangeCharacter(foodLoc[0],foodLoc[1],2);
         
         Program.screen.LockedList.Add(Program.screen.GetCorrespondingINum(foodLoc[0],foodLoc[1]));
 
+
+
+        foreach (int[] bodyPart in snakeBody)
+        {
+            Program.screen.LockedList.Add(Program.screen.GetCorrespondingINum(bodyPart[0], bodyPart[1]));
+        }
+
+
+        Program.screen.ClearScreen();
+
+
+        
+
         for(int i = snakeBody.Count - 1; i >= 0; i--){
 
-                if(foodLoc[0] == snakeX && foodLoc[1] == snakeY) {addBody = true; SpawnFoodThing(); points++; Program.screen.TextDisplayBefore[1] ="\nPontok:" + points+"\n";}
+                if(foodLoc[0] == snakeX && foodLoc[1] == snakeY) {addBody = true;
+                 SpawnFoodThing();
+                   points++;
+                   Program.screen.TextDisplayBefore[1] ="\nPontok:" + points+"\n";}
             if(!(snakeBody[i][0] < 0 || snakeBody[i][1] < 0))  
             Program.screen.ChangeCharacter(snakeBody[i][0], snakeBody[i][1], 1);
             followerTemp = snakeBody[0];
@@ -156,16 +196,24 @@ public class Snake{
             int[] temp = snakeBody[i - 1];
             if(i == 1) {snakeBody[i] = followerTemp; continue;}
             snakeBody[i] = temp;
-
+            if(snakeBody[0][0] == snakeBody[i][0] && snakeBody[0][1] == snakeBody[i][1]) {GameOver();
+             }
         }
         if(addBody == true){AddSnakeBodyPart(); addBody = false;}
         Program.screen.LockedList = new List<int>();
 
-        await Task.Delay(200);
+        await Task.Delay(200); 
         }
         
     }
-
+private static void GameOver()
+{
+    isDead = true;
+    Program.screen.TextDisplayAfter.Add("Meghaltál!");
+    Program.screen.RenderScreen();
+    Task.Delay(3000).Wait(); 
+    SnakeInit();
+}
    static int[] foodLoc = new int[2];
     public static void SpawnFoodThing(){
         int x = RandomNumberGenerator.GetInt32(Program.screen.xSize);
