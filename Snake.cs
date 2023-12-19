@@ -206,6 +206,7 @@ public class Snake{
         }
         
     }
+    //asd
 private static void GameOver()
 {
     isDead = true;
