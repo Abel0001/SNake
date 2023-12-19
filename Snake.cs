@@ -16,7 +16,7 @@ public class Snake{
 
     // static Thread snakeInputThread = new Thread(new ThreadStart(SnakeInput));
    // static Thread snakeMoveThread = new Thread(new ThreadStart(SnakeMove));
-    static Thread snakeBodyThread = new Thread(new ThreadStart(UpdateBody));
+   // static Thread snakeBodyThread = new Thread(new ThreadStart(UpdateBody));
 
 
     public static void SnakeInit(){
@@ -24,9 +24,10 @@ public class Snake{
         Program.screen.TextDisplayBefore.Add("\nPontok:" + points+"\n");
         SpawnFoodThing();
        // snakeMoveThread.Start();
-        snakeBodyThread.Start();
+        //snakeBodyThread.Start();
 
         snakeBody.Add(new int[] {5,5});
+        UpdateBody();
                 SnakeInput();
 
     }
@@ -44,18 +45,19 @@ public class Snake{
             switch (input){
                 case 'w':
                     direction = (int)Directions.Up;
+                //    SnakeMove();
                     break;
                 case 's':
                     direction = (int)Directions.Down;
-
+                //    SnakeMove();
                     break;
                 case 'a':
                      direction = (int)Directions.Left;
-
+                //    SnakeMove();
                     break;
                 case 'd':
-              direction = (int)Directions.Right;
-
+                    direction = (int)Directions.Right;
+                //    SnakeMove();
                     break;
                 case '1':
                 System.Environment.Exit(1);
@@ -76,6 +78,8 @@ public class Snake{
     }
 
     public static void SnakeMove(){
+        snakeMoveCounter++;
+
         if(snakeMoveCounter == 1){
             snakeMoveCounter = 0;
         if(direction == (int)Directions.Left){
@@ -126,7 +130,7 @@ public class Snake{
     
     static int points = 0;
     static int snakeMoveCounter = 0;
-    public static void UpdateBody(){
+    public static async Task UpdateBody(){
        while(true){
 
         
@@ -135,7 +139,6 @@ public class Snake{
 
         
 
-        int[] templast = new int[2];
         Program.screen.ClearScreen();
 
         Program.screen.ChangeCharacter(foodLoc[0],foodLoc[1],2);
@@ -156,10 +159,9 @@ public class Snake{
 
         }
         if(addBody == true){AddSnakeBodyPart(); addBody = false;}
-        snakeMoveCounter++;
         Program.screen.LockedList = new List<int>();
 
-        Thread.Sleep(200);
+        await Task.Delay(200);
         }
         
     }
