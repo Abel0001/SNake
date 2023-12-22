@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-
+using ScreenLib;
 public class Snake{
-
+    
     static bool isDead = false;
     static int snakeX = 0;
     static int snakeY = 0;

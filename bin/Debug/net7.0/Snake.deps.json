@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v7.0": {
       "Snake/1.0.0": {
+        "dependencies": {
+          "ScreenLib": "1.0.0"
+        },
         "runtime": {
           "Snake.dll": {}
+        }
+      },
+      "ScreenLib/1.0.0": {
+        "runtime": {
+          "ScreenLib.dll": {}
         }
       }
     }
   },
   "libraries": {
     "Snake/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ScreenLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

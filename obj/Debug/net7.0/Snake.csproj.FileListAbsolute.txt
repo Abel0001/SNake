@@ -13,3 +13,6 @@ E:\Proejcts\C#\Snake\obj\Debug\net7.0\refint\Snake.dll
 E:\Proejcts\C#\Snake\obj\Debug\net7.0\Snake.pdb
 E:\Proejcts\C#\Snake\obj\Debug\net7.0\Snake.genruntimeconfig.cache
 E:\Proejcts\C#\Snake\obj\Debug\net7.0\ref\Snake.dll
+E:\Proejcts\C#\Snake\bin\Debug\net7.0\ScreenLib.dll
+E:\Proejcts\C#\Snake\bin\Debug\net7.0\ScreenLib.pdb
+E:\Proejcts\C#\Snake\obj\Debug\net7.0\Snake.csproj.CopyComplete

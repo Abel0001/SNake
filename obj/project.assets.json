@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "ScreenLib/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/ScreenLib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ScreenLib.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ScreenLib/1.0.0": {
+      "type": "project",
+      "path": "../ScreenLib/ScreenLib.csproj",
+      "msbuildProject": "../ScreenLib/ScreenLib.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "ScreenLib >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\finom\\.nuget\\packages\\": {},
@@ -41,7 +60,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\Proejcts\\C#\\ScreenLib\\ScreenLib.csproj": {
+              "projectPath": "E:\\Proejcts\\C#\\ScreenLib\\ScreenLib.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
